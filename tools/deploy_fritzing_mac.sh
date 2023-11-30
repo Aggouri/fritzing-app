@@ -1,5 +1,5 @@
 #!/bin/bash -e
-QTBIN=/usr/local/opt/qt5/bin
+QTBIN=/users/Alex/Qt/5.15.2/clang_64/bin
 
 # Go to this scripts directory and then one up
 toolsdir=$(dirname "${BASH_SOURCE[0]}")

@@ -1,5 +1,104 @@
 # Fritzing
 
+This is a fork making the compilation work under macOS 13.5.2.
+
+## Compilation instructions
+
+### Clone this repo
+
+Define the directory where you will be building the application and its dependencies.
+
+```sh
+export STAGING_AREA=...
+mkdir -p ${STAGING_AREA}
+```
+
+Clone this fork in `${STAGING_AREA}`:
+
+```sh
+cd ${STAGING_AREA}
+gh repo clone Aggouri/fritzing-app
+```
+
+### Qt
+
+Install qt 5.15.2 using the [online installer]((https://www.qt.io/download-qt-installer-oss)). You can skip installing Android and iOS components.
+
+Make a note of the installation path, e.g. `/users/Alex/Qt/5.12.5`. Let's call this path  `<QT_PATH>`. 
+
+Version 5.12.5 has a [bug](https://codereview.qt-project.org/c/qt/qtbase/+/503172) which needs to be fixed manually. Replace the contents of file `<QT_PATH>/clang_64/mkspecs/features/toolchain.prf` with the contents of the file in [./qt-bugfix/toolchain.prf](./qt-bugfix/toolchain.prf).
+
+### Dependencies
+
+Download the following:
+
+- [boost 1.83.0](https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.tar.gz) from [https://boost.org](https://boost.org).
+- [libgit2 0.28.5](https://github.com/libgit2/libgit2/archive/refs/tags/v0.28.5.tar.gz) from [https://github.com/libgit2/libgit2](https://github.com/libgit2/libgit2/releases/tag/v0.28.5).
+- [ngspice 40](https://sourceforge.net/projects/ngspice/files/ng-spice-rework/40/ngspice-40.tar.gz/download) from [https://ngspice.sourceforge.io](https://ngspice.sourceforge.io/download.html).
+- [quazip 1.4](https://github.com/stachenov/quazip/archive/refs/tags/v1.4.tar.gz) from [https://github.com/stachenov/quazip](https://github.com/stachenov/quazip/releases/tag/v1.4).
+- [svgpp 1.3.0](https://github.com/svgpp/svgpp/archive/refs/tags/v1.3.0.tar.gz) from [https://github.com/svgpp/svgpp](https://github.com/svgpp/svgpp/releases/tag/v1.3.0).
+
+Extract the dowloaded file contents in `${STAGING_AREA}`, making sure the directories match the following names exactly:
+
+```sh
+.
+├── boost_1_83_0
+├── fritzing-app
+├── libgit2
+├── ngspice-40
+├── quazip_qt5
+└── svgpp-1.3.0
+```
+
+Build `libgit2`:
+
+```sh
+cd ${STAGING_AREA}/libgit2
+mkdir build
+cd build
+cmake -DBUILD_SHARED_LIBS=OFF ..
+cmake --build .
+```
+
+> If your system doesn't have `libssh2`, install it:
+> 
+> ```sh
+> brew install libssh2
+> ```
+
+Ensure the path to the `libssh2` library is correct in [./pri/libgit2detect.pri](./pri/libgit2detect.pri) (Look for `LIBS += /usr/local/Cellar/libssh2/1.11.0_1/lib/libssh2.1.dylib`).
+
+Build `quazip`:
+
+```sh
+cd ${STAGING_AREA}/quazip_qt5
+# replace QT_PATH with the actual path, as defined earlier
+export Qt5_DIR=<QT_PATH>/clang_64
+cmake -S . -B build -D QUAZIP_QT_MAJOR_VERSION=5 -D CMAKE_INSTALL_PREFIX=.
+cmake --build build --target install
+```
+
+### Edit build script
+
+Edit `QTBIN` in [./tools/deploy_fritzing_mac.sh](./tools/deploy_fritzing_mac.sh):
+
+Make it point to the correct `QT_PATH` value, as defined earlier.
+
+```
+QTBIN=<QT_PATH>/clang_64/bin
+```
+
+### Run the build script
+
+Run the script and hope for the best:
+
+```sh
+cd ${STAGING_AREA}/fritzing-app
+./deploy_fritzing_mac.sh
+```
+
+---
+
 |Branch|Badge|
 |------|-----|
 |master|[![Build Status](https://travis-ci.org/fritzing/fritzing-app.svg?branch=master)](https://travis-ci.org/fritzing/fritzing-app)|

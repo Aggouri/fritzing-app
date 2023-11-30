@@ -81,7 +81,7 @@ macx {
     Debug:RCC_DIR = $${DEBDIR}
     Debug:UI_DIR = $${DEBDIR}
 
-    #QMAKE_MAC_SDK = macosx10.11            # uncomment/adapt for your version of OSX
+    #QMAKE_MAC_SDK = macosx14.0            # uncomment/adapt for your version of OSX
     CONFIG += x86_64 # x86 ppc
     QMAKE_INFO_PLIST = FritzingInfo.plist
     #DEFINES += QT_NO_DEBUG                # uncomment this for xcode

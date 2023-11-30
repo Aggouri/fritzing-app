@@ -86,7 +86,7 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
 //	qDebug() << "capabilities" << event->device()->capabilities();
 //	qDebug() << "has pixelscroll" << event->device()->hasCapability(QInputDevice::Capability::PixelScroll);
 //	qDebug() << "system id" << event->device()->systemId();
-	qint64 systemId =  event->device()->systemId();
+    qint64 systemId =  event->source();
 
 	if (!m_acceptWheelEvents) {
 		QGraphicsView::wheelEvent(event);

@@ -60,6 +60,9 @@ unix {
         }
         macx {
             LIBS += $$LIBGIT2LIB/libgit2.a -framework Security
+            # libssh2 is required by libgit2 at linking time
+            # Adapt path if that's not where it is in your system
+            LIBS += /usr/local/Cellar/libssh2/1.11.0_1/lib/libssh2.1.dylib
         } else {
             LIBS += $$LIBGIT2LIB/libgit2.a  -lssl -lcrypto
         }

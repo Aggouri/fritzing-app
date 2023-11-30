@@ -12,18 +12,18 @@ exists($$absolute_path($$PWD/../../quazip_qt$$QT_MAJOR_VERSION)) {
         error("quazip could not be found.")
     }
 
-message("including $$absolute_path($${QUAZIPPATH}/include/quazip)")
+message("including $$absolute_path($${QUAZIPPATH}/include/QuaZip-Qt5-1.4/quazip)")
 
 unix:!macx {
     message("including quazip library on linux")
-    INCLUDEPATH += $$absolute_path($${QUAZIPPATH}/include/quazip)
+    INCLUDEPATH += $$absolute_path($${QUAZIPPATH}/include/QuaZip-Qt5-1.4/quazip)
     LIBS += -L$$absolute_path($${QUAZIPPATH}/lib) -lquazip1-qt$$QT_MAJOR_VERSION
     QMAKE_RPATHDIR += $$absolute_path($${QUAZIPPATH}/lib)
 }
 
 macx {
     message("including quazip library on mac os")
-    INCLUDEPATH += $$absolute_path($${QUAZIPPATH}/include/quazip)
+    INCLUDEPATH += $$absolute_path($${QUAZIPPATH}/include/QuaZip-Qt5-1.4/quazip)
     LIBS += -L$$absolute_path($${QUAZIPPATH}/lib) -lquazip1-qt$$QT_MAJOR_VERSION
     QMAKE_RPATHDIR += $$absolute_path($${QUAZIPPATH}/lib)
     LIBS += -lz
@@ -33,7 +33,7 @@ win32 {
 
     message("including quazip library on windows")
 
-    QUAZIPINCLUDE = $$absolute_path($${QUAZIPPATH}/include/quazip)
+    QUAZIPINCLUDE = $$absolute_path($${QUAZIPPATH}/include/QuaZip-Qt5-1.4/quazip)
     exists($$QUAZIPINCLUDE/quazip.h) {
         message("found quazip include path at $$QUAZIPINCLUDE")
     } else {

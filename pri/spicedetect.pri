@@ -20,7 +20,7 @@ NGSPICEPATH = $$absolute_path($${NGSPICEPATH})
 
 exists($$NGSPICEPATH) {
     message("using $${NGSPICEPATH}")
-	INCLUDEPATH += $$NGSPICEPATH/include
+	INCLUDEPATH += $$NGSPICEPATH/src/include
 } else {
     error("ngspice not found in $${NGSPICEPATH}")
 }
